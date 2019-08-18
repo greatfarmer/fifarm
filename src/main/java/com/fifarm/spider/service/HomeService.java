@@ -2,6 +2,7 @@ package com.fifarm.spider.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fifarm.spider.dto.Player;
 import com.fifarm.spider.net.HttpRequestService;
 import com.fifarm.spider.net.Result;
 
@@ -24,6 +25,17 @@ public class HomeService {
         Map<String, Object> map = objectMapper.readValue(content, new TypeReference<Map<String,Object>>(){});
 
         return map;
+    }
+
+    public Player jsonToPlayer() throws Exception {
+        HomeService homeService = new HomeService();
+        Result result = homeService.getAPI();
+        String content = result.getResponse();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Player player = objectMapper.readValue(content, Player.class);
+
+        return player;
     }
 
 }

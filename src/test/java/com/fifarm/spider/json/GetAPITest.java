@@ -4,7 +4,7 @@ import com.fifarm.spider.net.HttpRequestService;
 import com.fifarm.spider.net.Result;
 import org.junit.Test;
 
-public class APITest {
+public class GetAPITest {
 
     @Test
     public void test() throws Exception {
