@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### application.yml for production ###
+src/main/resources/real-application.yml

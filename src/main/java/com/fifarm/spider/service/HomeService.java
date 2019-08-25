@@ -27,9 +27,8 @@ public class HomeService {
         String content = result.getResponse();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> map = objectMapper.readValue(content, new TypeReference<Map<String,Object>>(){});
 
-        return map;
+        return objectMapper.readValue(content, new TypeReference<Map<String,Object>>(){});
     }
 
     public Player jsonToPlayer() throws Exception {
@@ -43,9 +42,8 @@ public class HomeService {
         JsonNode item = items.get(0);
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Player player = objectMapper.treeToValue(item, Player.class);
 
-        return player;
+        return objectMapper.treeToValue(item, Player.class);
     }
 
 }
