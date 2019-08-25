@@ -15,12 +15,9 @@ public class PlayerDbHandler {
 
     public void addPlayer(Player player) {
         Optional<Player> existingPlayer = playerRepository.findByFirstName(player.getFirstName());
-        if (!existingPlayer.isPresent()) {
+        boolean isNewPlayer = !existingPlayer.isPresent() || !player.equals(existingPlayer.get());
+        if (isNewPlayer) {
             playerRepository.save(player);
-        } else {
-            if (!player.equals(existingPlayer.get())) {
-                playerRepository.save(player);
-            }
         }
     }
 }
