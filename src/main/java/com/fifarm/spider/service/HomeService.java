@@ -1,13 +1,18 @@
 package com.fifarm.spider.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fifarm.spider.dto.Player;
 import com.fifarm.spider.net.HttpRequestService;
 import com.fifarm.spider.net.Result;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Service
 public class HomeService {
 
     public Result getAPI() throws Exception {
@@ -33,7 +38,12 @@ public class HomeService {
         String content = result.getResponse();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Player player = objectMapper.readValue(content, Player.class);
+        JsonNode node = objectMapper.readTree(content);
+        ArrayNode items = (ArrayNode) node.get("items");
+        JsonNode item = items.get(0);
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Player player = objectMapper.treeToValue(item, Player.class);
 
         return player;
     }
