@@ -1,11 +1,9 @@
 package com.fifarm.spider.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fifarm.spider.dto.deserializer.PlayerDeserializer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +14,10 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name="league_id")
+    private League league;
+
     private String firstName;
     private String lastName;
     private String position;
@@ -24,9 +26,6 @@ public class Player {
     private String birthdate;
     private int weight;
     private int age;
-
-    private String leagueName;
-    private String leagueImgUrl;
 
     private String nationName;
     private String nationImgUrl;
@@ -42,6 +41,14 @@ public class Player {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 
     public String getFirstName() {
@@ -100,22 +107,6 @@ public class Player {
         this.age = age;
     }
 
-    public String getLeagueName() {
-        return leagueName;
-    }
-
-    public void setLeagueName(String leagueName) {
-        this.leagueName = leagueName;
-    }
-
-    public String getLeagueImgUrl() {
-        return leagueImgUrl;
-    }
-
-    public void setLeagueImgUrl(String leagueImgUrl) {
-        this.leagueImgUrl = leagueImgUrl;
-    }
-
     public String getNationName() {
         return nationName;
     }
@@ -168,14 +159,13 @@ public class Player {
                 lastName.equals(player.lastName) &&
                 position.equals(player.position) &&
                 birthdate.equals(player.birthdate) &&
-                leagueName.equals(player.leagueName) &&
                 nationName.equals(player.nationName) &&
                 clubName.equals(player.clubName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, position, height, birthdate, weight, age, leagueName, nationName, clubName);
+        return Objects.hash(firstName, lastName, position, height, birthdate, weight, age, nationName, clubName);
     }
 
     @Override
@@ -189,8 +179,6 @@ public class Player {
                 ", birthdate='" + birthdate + '\'' +
                 ", weight=" + weight +
                 ", age=" + age +
-                ", leagueName='" + leagueName + '\'' +
-                ", leagueImgUrl='" + leagueImgUrl + '\'' +
                 ", nationName='" + nationName + '\'' +
                 ", nationImgUrl='" + nationImgUrl + '\'' +
                 ", clubName='" + clubName + '\'' +

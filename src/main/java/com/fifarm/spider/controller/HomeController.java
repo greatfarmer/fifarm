@@ -1,6 +1,8 @@
 package com.fifarm.spider.controller;
 
+import com.fifarm.spider.db.LeagueDbHandler;
 import com.fifarm.spider.db.PlayerDbHandler;
+import com.fifarm.spider.dto.League;
 import com.fifarm.spider.dto.Player;
 import com.fifarm.spider.net.Result;
 import com.fifarm.spider.service.HomeService;
@@ -19,6 +21,9 @@ public class HomeController {
 
     @Autowired
     PlayerDbHandler playerDbHandler;
+
+    @Autowired
+    LeagueDbHandler leagueDbHandler;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -42,10 +47,23 @@ public class HomeController {
 
     @GetMapping("/player")
     public String player(Model model) throws Exception {
+        League league = homeService.jsonToLeague();
+        leagueDbHandler.addLeague(league);
+
         Player player = homeService.jsonToPlayer();
+        player.setLeague(league);
         playerDbHandler.addPlayer(player);
+
         model.addAttribute("player", player);
         return "player";
+    }
+
+    @GetMapping("/league")
+    public String league(Model model) throws Exception {
+        League league = homeService.jsonToLeague();
+        leagueDbHandler.addLeague(league);
+        model.addAttribute("league", league);
+        return "league";
     }
 
 }

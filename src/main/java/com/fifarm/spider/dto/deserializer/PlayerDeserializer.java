@@ -1,10 +1,11 @@
-package com.fifarm.spider.dto;
+package com.fifarm.spider.dto.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fifarm.spider.dto.Player;
 
 import java.io.IOException;
 
@@ -31,9 +32,6 @@ public class PlayerDeserializer extends StdDeserializer<Player> {
         player.setWeight(node.get("weight").asInt());
         player.setBirthdate(node.get("birthdate").asText());
         player.setAge(node.get("age").asInt());
-
-        player.setLeagueName(node.get("league").get("name").asText());
-        player.setLeagueImgUrl(node.get("league").get("imageUrls").get("light").asText());
 
         player.setNationName(node.get("nation").get("name").asText());
         player.setNationImgUrl(node.get("nation").get("imageUrls").get("medium").asText());
