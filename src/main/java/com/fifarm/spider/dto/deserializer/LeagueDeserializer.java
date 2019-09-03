@@ -28,7 +28,7 @@ public class LeagueDeserializer extends StdDeserializer<League> {
         league.setId(node.get("id").asLong());
         league.setName(node.get("name").asText());
         league.setAbbrName(node.get("abbrName").asText());
-        league.setImageUrl(node.get("imgUrl").asText());
+        league.setImgUrl(node.get("imgUrl").asText());
 
         JsonNode imageUrlsNode = node.get("imageUrls");
 

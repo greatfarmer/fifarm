@@ -1,8 +1,12 @@
 package com.fifarm.spider.controller;
 
+import com.fifarm.spider.db.ClubDbHandler;
 import com.fifarm.spider.db.LeagueDbHandler;
+import com.fifarm.spider.db.NationDbHandler;
 import com.fifarm.spider.db.PlayerDbHandler;
+import com.fifarm.spider.dto.Club;
 import com.fifarm.spider.dto.League;
+import com.fifarm.spider.dto.Nation;
 import com.fifarm.spider.dto.Player;
 import com.fifarm.spider.net.Result;
 import com.fifarm.spider.service.HomeService;
@@ -24,6 +28,12 @@ public class HomeController {
 
     @Autowired
     LeagueDbHandler leagueDbHandler;
+
+    @Autowired
+    NationDbHandler nationDbHandler;
+
+    @Autowired
+    ClubDbHandler clubDbHandler;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -50,8 +60,16 @@ public class HomeController {
         League league = homeService.jsonToLeague();
         leagueDbHandler.addLeague(league);
 
+        Nation nation = homeService.jsonToNation();
+        nationDbHandler.addNation(nation);
+
+        Club club = homeService.jsonToClub();
+        clubDbHandler.addClub(club);
+
         Player player = homeService.jsonToPlayer();
         player.setLeague(league);
+        player.setNation(nation);
+        player.setClub(club);
         playerDbHandler.addPlayer(player);
 
         model.addAttribute("player", player);

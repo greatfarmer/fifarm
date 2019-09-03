@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fifarm.spider.dto.Club;
 import com.fifarm.spider.dto.League;
+import com.fifarm.spider.dto.Nation;
 import com.fifarm.spider.dto.Player;
 import com.fifarm.spider.net.HttpRequestService;
 import com.fifarm.spider.net.Result;
@@ -47,6 +49,22 @@ public class HomeService {
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper.treeToValue(league, League.class);
+    }
+
+    public Nation jsonToNation() throws Exception {
+        JsonNode item = getItems().get(0);
+        JsonNode nation = item.get("nation");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper.treeToValue(nation, Nation.class);
+    }
+
+    public Club jsonToClub() throws Exception {
+        JsonNode item = getItems().get(0);
+        JsonNode club = item.get("club");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper.treeToValue(club, Club.class);
     }
 
     private ArrayNode getItems() throws Exception {

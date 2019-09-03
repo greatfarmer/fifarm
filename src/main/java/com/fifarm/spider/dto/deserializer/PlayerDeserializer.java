@@ -33,12 +33,6 @@ public class PlayerDeserializer extends StdDeserializer<Player> {
         player.setBirthdate(node.get("birthdate").asText());
         player.setAge(node.get("age").asInt());
 
-        player.setNationName(node.get("nation").get("name").asText());
-        player.setNationImgUrl(node.get("nation").get("imageUrls").get("medium").asText());
-
-        player.setClubName(node.get("club").get("name").asText());
-        player.setClubImgUrl(node.get("club").get("imageUrls").get("light").get("medium").asText());
-
         player.setHeadshotImgUrl(node.get("headshot").get("imgUrl").asText());
 
         return player;

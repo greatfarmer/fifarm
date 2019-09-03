@@ -13,15 +13,16 @@
 <img th:attr="src=${player.headshotImgUrl}" />
 
 <h3>league</h3>
-<p th:text="${player.league.id}">leagueName</p>
+<p th:text="${player.league.name}">leagueName</p>
 <img th:attr="src=${player.league.imageUrlsLight}" />
 
 <h3>nation</h3>
-<p th:text="${player.nationName}">nationName</p>
-<img th:attr="src=${player.nationImgUrl}" />
+<p th:text="${player.nation.name}">nationName</p>
+<img th:attr="src=${player.nation.imageUrlsMedium}" />
 
 <h3>club</h3>
-<img th:attr="src=${player.clubImgUrl}" />
+<p th:text="${player.club.name}">nationName</p>
+<img th:attr="src=${player.club.imageUrlsLight}" />
 
 </body>
 </html>

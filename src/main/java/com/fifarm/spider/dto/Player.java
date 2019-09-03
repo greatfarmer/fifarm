@@ -18,6 +18,14 @@ public class Player {
     @JoinColumn(name="league_id")
     private League league;
 
+    @ManyToOne
+    @JoinColumn(name="nation_id")
+    private Nation nation;
+
+    @ManyToOne
+    @JoinColumn(name="club_id")
+    private Club club;
+
     private String firstName;
     private String lastName;
     private String position;
@@ -26,12 +34,6 @@ public class Player {
     private String birthdate;
     private int weight;
     private int age;
-
-    private String nationName;
-    private String nationImgUrl;
-
-    private String clubName;
-    private String clubImgUrl;
 
     private String headshotImgUrl;
 
@@ -49,6 +51,22 @@ public class Player {
 
     public void setLeague(League league) {
         this.league = league;
+    }
+
+    public Nation getNation() {
+        return nation;
+    }
+
+    public void setNation(Nation nation) {
+        this.nation = nation;
+    }
+
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
     }
 
     public String getFirstName() {
@@ -107,38 +125,6 @@ public class Player {
         this.age = age;
     }
 
-    public String getNationName() {
-        return nationName;
-    }
-
-    public void setNationName(String nationName) {
-        this.nationName = nationName;
-    }
-
-    public String getNationImgUrl() {
-        return nationImgUrl;
-    }
-
-    public void setNationImgUrl(String nationImgUrl) {
-        this.nationImgUrl = nationImgUrl;
-    }
-
-    public String getClubName() {
-        return clubName;
-    }
-
-    public void setClubName(String clubName) {
-        this.clubName = clubName;
-    }
-
-    public String getClubImgUrl() {
-        return clubImgUrl;
-    }
-
-    public void setClubImgUrl(String clubImgUrl) {
-        this.clubImgUrl = clubImgUrl;
-    }
-
     public String getHeadshotImgUrl() {
         return headshotImgUrl;
     }
@@ -158,14 +144,12 @@ public class Player {
                 firstName.equals(player.firstName) &&
                 lastName.equals(player.lastName) &&
                 position.equals(player.position) &&
-                birthdate.equals(player.birthdate) &&
-                nationName.equals(player.nationName) &&
-                clubName.equals(player.clubName);
+                birthdate.equals(player.birthdate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, position, height, birthdate, weight, age, nationName, clubName);
+        return Objects.hash(firstName, lastName, position, height, birthdate, weight, age);
     }
 
     @Override
@@ -179,11 +163,8 @@ public class Player {
                 ", birthdate='" + birthdate + '\'' +
                 ", weight=" + weight +
                 ", age=" + age +
-                ", nationName='" + nationName + '\'' +
-                ", nationImgUrl='" + nationImgUrl + '\'' +
-                ", clubName='" + clubName + '\'' +
-                ", clubImgUrl='" + clubImgUrl + '\'' +
                 ", headshotImgUrl='" + headshotImgUrl + '\'' +
                 '}';
     }
+
 }

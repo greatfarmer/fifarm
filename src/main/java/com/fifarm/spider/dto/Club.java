@@ -1,14 +1,14 @@
 package com.fifarm.spider.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fifarm.spider.dto.deserializer.LeagueDeserializer;
+import com.fifarm.spider.dto.deserializer.ClubDeserializer;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@JsonDeserialize(using = LeagueDeserializer.class)
-public class League {
+@JsonDeserialize(using = ClubDeserializer.class)
+public class Club {
 
     @Id
     private Long id;
@@ -47,7 +47,7 @@ public class League {
         return imgUrl;
     }
 
-    public void setImgUrl(String imageUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 
@@ -69,7 +69,7 @@ public class League {
 
     @Override
     public String toString() {
-        return "League{" +
+        return "Club{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", abbrName='" + abbrName + '\'' +

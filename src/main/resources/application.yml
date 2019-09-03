@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: production
+    active: local
     jpa:
       properties:
         hibernate:
@@ -9,8 +9,8 @@ spring:
 ---
 spring:
   profiles: local
-  datasource:
-    data: classpath:data-h2.sql
+#  datasource:
+#    data: classpath:data-h2.sql
   jpa:
     show-sql: true
     hibernate:

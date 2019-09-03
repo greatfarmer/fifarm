@@ -1,14 +1,14 @@
 package com.fifarm.spider.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fifarm.spider.dto.deserializer.LeagueDeserializer;
+import com.fifarm.spider.dto.deserializer.NationDeserializer;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@JsonDeserialize(using = LeagueDeserializer.class)
-public class League {
+@JsonDeserialize(using = NationDeserializer.class)
+public class Nation {
 
     @Id
     private Long id;
@@ -16,8 +16,9 @@ public class League {
     private String name;
     private String abbrName;
     private String imgUrl;
-    private String imageUrlsDark;
-    private String imageUrlsLight;
+    private String imageUrlsSmall;
+    private String imageUrlsMedium;
+    private String imageUrlsLarge;
 
     public Long getId() {
         return id;
@@ -47,35 +48,44 @@ public class League {
         return imgUrl;
     }
 
-    public void setImgUrl(String imageUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 
-    public String getImageUrlsDark() {
-        return imageUrlsDark;
+    public String getImageUrlsSmall() {
+        return imageUrlsSmall;
     }
 
-    public void setImageUrlsDark(String imageUrlsDark) {
-        this.imageUrlsDark = imageUrlsDark;
+    public void setImageUrlsSmall(String imageUrlsSmall) {
+        this.imageUrlsSmall = imageUrlsSmall;
     }
 
-    public String getImageUrlsLight() {
-        return imageUrlsLight;
+    public String getImageUrlsMedium() {
+        return imageUrlsMedium;
     }
 
-    public void setImageUrlsLight(String imageUrlsLight) {
-        this.imageUrlsLight = imageUrlsLight;
+    public void setImageUrlsMedium(String imageUrlsMedium) {
+        this.imageUrlsMedium = imageUrlsMedium;
+    }
+
+    public String getImageUrlsLarge() {
+        return imageUrlsLarge;
+    }
+
+    public void setImageUrlsLarge(String imageUrlsLarge) {
+        this.imageUrlsLarge = imageUrlsLarge;
     }
 
     @Override
     public String toString() {
-        return "League{" +
+        return "Nation{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", abbrName='" + abbrName + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
-                ", imageUrlsDark='" + imageUrlsDark + '\'' +
-                ", imageUrlsLight='" + imageUrlsLight + '\'' +
+                ", imageUrlsSmall='" + imageUrlsSmall + '\'' +
+                ", imageUrlsMedium='" + imageUrlsMedium + '\'' +
+                ", imageUrlsLarge='" + imageUrlsLarge + '\'' +
                 '}';
     }
 
