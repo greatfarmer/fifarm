@@ -20,11 +20,18 @@ import java.util.Map;
 public class HomeService {
 
     @Autowired
+    HttpRequestService httpRequestService;
+
+    @Autowired
     ObjectMapper objectMapper;
 
     public Result getAPI() throws Exception {
-        String url = "https://www.easports.com/fifa/ultimate-team/api/fut/item?jsonParamObject=%7B%22baseid%22:%22200104%22,%22link%22:1%7D";
-        HttpRequestService httpRequestService = new HttpRequestService();
+        // String url = "https://www.easports.com/fifa/ultimate-team/api/fut/item?jsonParamObject=%7B%22baseid%22:%22200104%22,%22link%22:1%7D";
+        // 선수별 baseid를 알아야함
+        String baseUrl = "https://www.easports.com/fifa/ultimate-team/api/fut/item?jsonParamObject=%%7B%%22page%%22:1,%%22baseid%%22:%d%%7D";
+        // get에서 json
+        String url = String.format(baseUrl, 176676);
+
         return httpRequestService.sendGet(url);
     }
 
