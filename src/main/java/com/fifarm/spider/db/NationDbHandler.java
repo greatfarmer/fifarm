@@ -1,6 +1,5 @@
 package com.fifarm.spider.db;
 
-import com.fifarm.spider.dto.League;
 import com.fifarm.spider.dto.Nation;
 import com.fifarm.spider.repository.NationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
