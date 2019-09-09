@@ -5,6 +5,11 @@ spring:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQL5InnoDBDialect #Hibernate에서 MySQL문법 사용
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
 
 ---
 spring:
