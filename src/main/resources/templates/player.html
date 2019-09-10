@@ -5,23 +5,23 @@
     <title>Player</title>
 </head>
 <body>
-<p th:text="${player}">player</p>
-<h3>player</h3>
-<p th:text="${player.firstName}">firstName</p>
-<p th:text="${player.lastName}">lastName</p>
-<img th:attr="src=${player.headshotImgUrl}" />
+    <div id="player">
+        <h3>player</h3>
+        <p th:text="${player.firstName}">firstName</p>
+        <p th:text="${player.lastName}">lastName</p>
+        <img th:attr="src=${player.headshotImgUrl}" />
 
-<h3>league</h3>
-<p th:text="${player.league.name}">leagueName</p>
-<img th:attr="src=${player.league.imageUrlsLight}" />
+        <h3>league</h3>
+        <p th:text="${player.league.name}">leagueName</p>
+        <img th:attr="src=${player.league.imageUrlsLight}" />
 
-<h3>nation</h3>
-<p th:text="${player.nation.name}">nationName</p>
-<img th:attr="src=${player.nation.imageUrlsMedium}" />
+        <h3>nation</h3>
+        <p th:text="${player.nation.name}">nationName</p>
+        <img th:attr="src=${player.nation.imageUrlsMedium}" />
 
-<h3>club</h3>
-<p th:text="${player.club.name}">nationName</p>
-<img th:attr="src=${player.club.imageUrlsLight}" />
-
+        <h3>club</h3>
+        <p th:text="${player.club.name}">nationName</p>
+        <img th:attr="src=${player.club.imageUrlsLight}" />
+    </div>
 </body>
 </html>
