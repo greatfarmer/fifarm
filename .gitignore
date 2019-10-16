@@ -30,5 +30,8 @@ build/
 ### VS Code ###
 .vscode/
 
+### macOS ###
+.DS_Store
+
 ### application.yml for production ###
 src/main/resources/real-application.yml
