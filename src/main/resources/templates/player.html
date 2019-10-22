@@ -6,29 +6,29 @@
 </head>
 <body>
 
-<div class="row">
+<div class="row" th:each="player : ${players}">
     <div class="col-sm-3">
         <h3>Player</h3>
         <p>
             <span th:text="${player.firstName}">firstName</span>
             <span th:text="${player.lastName}">lastName</span>
         </p>
-        <img th:attr="src=${player.headshotImgUrl}" />
+        <img th:attr="src=${player.headshot.imgUrl}" />
     </div>
     <div class="col-sm-3">
         <h3>Nation</h3>
         <p th:text="${player.nation.name}">nationName</p>
-        <img th:attr="src=${player.nation.imageUrlsMedium}" />
+        <img th:attr="src=${player.nation.imageUrls.medium}" />
     </div>
     <div class="col-sm-3">
         <h3>League</h3>
         <p th:text="${player.league.name}">leagueName</p>
-        <img th:attr="src=${player.league.imageUrlsLight}" />
+        <img th:attr="src=${player.league.imageUrls.light}" />
     </div>
     <div class="col-sm-3">
         <h3>Club</h3>
         <p th:text="${player.club.name}">nationName</p>
-        <img th:attr="src=${player.club.imageUrlsLight}" />
+        <img th:attr="src=${player.club.imageUrls.light.medium}" />
     </div>
 </div>
 
