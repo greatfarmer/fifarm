@@ -230,7 +230,7 @@
     <a href="#top" title="To Top">
         <span class="glyphicon glyphicon-chevron-up"></span>
     </a>
-    <p>Copyright 2019. Seonghun Kang. All rights reserved.</p>
+    <p>Copyright 2019. greatfarmer. All rights reserved.</p>
 </footer>
 
 <script>
@@ -248,12 +248,13 @@
         });
     }
 
-    var input = document.getElementById("playerName");
-    input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("searchBtn").click();
-        }
+    $(document).ready(function() {
+        $('#playerName').keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $('#searchBtn').click();
+            }
+        });
     });
 </script>
 
