@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Player</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/webjars/c3/0.6.3/c3.min.css">
+    <script src="/webjars/c3/0.6.3/docs/js/d3-5.4.0.min.js"></script>
+    <script src="/webjars/c3/0.6.3/c3.min.js"></script>
 </head>
 <body>
 
@@ -17,20 +21,148 @@
     </div>
     <div class="col-sm-3">
         <h3>Nation</h3>
-        <p th:text="${player.nation.name}">nationName</p>
+        <p th:text="${player.nation.name}">nation</p>
         <img th:attr="src=${player.nation.imageUrls.medium}" />
     </div>
     <div class="col-sm-3">
         <h3>League</h3>
-        <p th:text="${player.league.name}">leagueName</p>
+        <p th:text="${player.league.name}">league</p>
         <img th:attr="src=${player.league.imageUrls.light}" />
     </div>
     <div class="col-sm-3">
         <h3>Club</h3>
-        <p th:text="${player.club.name}">nationName</p>
+        <p th:text="${player.club.name}">club</p>
         <img th:attr="src=${player.club.imageUrls.light.medium}" />
     </div>
+    <div class="col-sm-offset-0"></div>
+    <div id="chart"></div>
+    <div class="col-sm-12">
+        <div id="pace" class="col-sm-2">
+            <h3>PACE</h3>
+            <div id="chart0"></div>
+            <h4>Acceleration</h4>
+            <p th:text="${player.acceleration}"></p>
+            <h4>Sprint Speed</h4>
+            <p th:text="${player.sprintspeed}"></p>
+        </div>
+        <div class="col-sm-2">
+            <h3>SHOOTING</h3>
+            <div id="chart1"></div>
+            <h4>Positioning</h4>
+            <p th:text="${player.positioning}"></p>
+            <h4>Finishing</h4>
+            <p th:text="${player.finishing}"></p>
+            <h4>Shot Power</h4>
+            <p th:text="${player.shotpower}"></p>
+            <h4>Long Shots</h4>
+            <p th:text="${player.longshots}"></p>
+            <h4>Volleys</h4>
+            <p th:text="${player.volleys}"></p>
+            <h4>Penalties</h4>
+            <p th:text="${player.penalties}"></p>
+        </div>
+        <div class="col-sm-2">
+            <h3>PASSING</h3>
+            <div id="chart2"></div>
+            <h4>Vision</h4>
+            <p th:text="${player.vision}"></p>
+            <h4>Crossing</h4>
+            <p th:text="${player.crossing}"></p>
+            <h4>Free Kick</h4>
+            <p th:text="${player.freekickaccuracy}"></p>
+            <h4>Short Passing</h4>
+            <p th:text="${player.shortpassing}"></p>
+            <h4>Long Passing</h4>
+            <p th:text="${player.longpassing}"></p>
+            <h4>Curve</h4>
+            <p th:text="${player.curve}"></p>
+        </div>
+        <div class="col-sm-2">
+            <h3>DRIBBLING</h3>
+            <div id="chart3"></div>
+            <h4>Agility</h4>
+            <p th:text="${player.agility}"></p>
+            <h4>Balance</h4>
+            <p th:text="${player.balance}"></p>
+            <h4>Reactions</h4>
+            <p th:text="${player.reactions}"></p>
+            <h4>Ball Control</h4>
+            <p th:text="${player.ballcontrol}"></p>
+            <h4>Dribbling</h4>
+            <p th:text="${player.dribbling}"></p>
+            <h4>Composure</h4>
+            <p th:text="${player.composure}"></p>
+        </div>
+        <div class="col-sm-2">
+            <h3>DEFENSE</h3>
+            <div id="chart4"></div>
+            <h4>Interceptions</h4>
+            <p th:text="${player.interceptions}"></p>
+            <h4>Heading</h4>
+            <p th:text="${player.headingaccuracy}"></p>
+            <h4>Marking</h4>
+            <p th:text="${player.marking}"></p>
+            <h4>Standing Tackle</h4>
+            <p th:text="${player.standingtackle}"></p>
+            <h4>Sliding Tackle</h4>
+            <p th:text="${player.slidingtackle}"></p>
+        </div>
+        <div class="col-sm-2">
+            <h3>PHYSICAL</h3>
+            <div id="chart5"></div>
+            <h4>Jumping</h4>
+            <p th:text="${player.jumping}"></p>
+            <h4>Stamina</h4>
+            <p th:text="${player.stamina}"></p>
+            <h4>Strength</h4>
+            <p th:text="${player.strength}"></p>
+            <h4>Aggression</h4>
+            <p th:text="${player.aggression}"></p>
+        </div>
+    </div>
 </div>
+
+<script>
+    var data = [];
+
+    var sum = 0;
+    $('#pace p').each(function (index, item) {
+        sum = sum + Number($(item).text());
+    });
+    var result = Math.round(sum / $('#pace p').length);
+    data.push(result);
+
+    data.forEach(function (d, i) {
+        console.log(data);
+        id = "chart" + i;
+        var chart = c3.generate({
+            bindto: '#chart' + i,
+            data: {
+                columns: [
+                    ['data', d]
+                ],
+                type: 'gauge'
+            },
+            legend: {
+                show: false
+            },
+            gauge: {
+                label: {
+                    format: function(value, ratio) {
+                        return value;
+                    },
+                    show: false
+                }
+            },
+            color: {
+                pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'],
+                threshold: {
+                    values: [20, 40, 60, 80]
+                }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
