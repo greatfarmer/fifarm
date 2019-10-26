@@ -12,7 +12,7 @@
 
 <div class="row" th:each="player : ${players}">
     <div class="col-sm-3">
-        <h3>Player</h3>
+        <h3>PLAYER</h3>
         <p>
             <span th:text="${player.firstName}">firstName</span>
             <span th:text="${player.lastName}">lastName</span>
@@ -20,22 +20,23 @@
         <img th:attr="src=${player.headshot.imgUrl}" />
     </div>
     <div class="col-sm-3">
-        <h3>Nation</h3>
+        <h3>NATION</h3>
         <p th:text="${player.nation.name}">nation</p>
         <img th:attr="src=${player.nation.imageUrls.medium}" />
     </div>
     <div class="col-sm-3">
-        <h3>League</h3>
+        <h3>LEAGUE</h3>
         <p th:text="${player.league.name}">league</p>
         <img th:attr="src=${player.league.imageUrls.light}" />
     </div>
     <div class="col-sm-3">
-        <h3>Club</h3>
+        <h3>CLUB</h3>
         <p th:text="${player.club.name}">club</p>
         <img th:attr="src=${player.club.imageUrls.light.medium}" />
     </div>
-    <div class="col-sm-offset-0"></div>
-    <div id="chart"></div>
+
+    <div class="col-sm-12">&nbsp;</div>
+
     <div id="attr" class="col-sm-12">
         <div id="pace" class="col-sm-2 col-attr">
             <h3>PACE</h3>
@@ -160,6 +161,9 @@
                 threshold: {
                     values: [25, 50, 75, 100]
                 }
+            },
+            size: {
+                height: 100
             }
         });
     });
