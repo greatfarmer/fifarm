@@ -36,8 +36,8 @@
     </div>
     <div class="col-sm-offset-0"></div>
     <div id="chart"></div>
-    <div class="col-sm-12">
-        <div id="pace" class="col-sm-2">
+    <div id="attr" class="col-sm-12">
+        <div id="pace" class="col-sm-2 col-attr">
             <h3>PACE</h3>
             <div id="chart0"></div>
             <h4>Acceleration</h4>
@@ -45,7 +45,7 @@
             <h4>Sprint Speed</h4>
             <p th:text="${player.sprintspeed}"></p>
         </div>
-        <div class="col-sm-2">
+        <div id="shooting" class="col-sm-2 col-attr">
             <h3>SHOOTING</h3>
             <div id="chart1"></div>
             <h4>Positioning</h4>
@@ -61,7 +61,7 @@
             <h4>Penalties</h4>
             <p th:text="${player.penalties}"></p>
         </div>
-        <div class="col-sm-2">
+        <div id="passing" class="col-sm-2 col-attr">
             <h3>PASSING</h3>
             <div id="chart2"></div>
             <h4>Vision</h4>
@@ -77,7 +77,7 @@
             <h4>Curve</h4>
             <p th:text="${player.curve}"></p>
         </div>
-        <div class="col-sm-2">
+        <div id="dribbling" class="col-sm-2 col-attr">
             <h3>DRIBBLING</h3>
             <div id="chart3"></div>
             <h4>Agility</h4>
@@ -93,7 +93,7 @@
             <h4>Composure</h4>
             <p th:text="${player.composure}"></p>
         </div>
-        <div class="col-sm-2">
+        <div id="defense" class="col-sm-2 col-attr">
             <h3>DEFENSE</h3>
             <div id="chart4"></div>
             <h4>Interceptions</h4>
@@ -107,7 +107,7 @@
             <h4>Sliding Tackle</h4>
             <p th:text="${player.slidingtackle}"></p>
         </div>
-        <div class="col-sm-2">
+        <div id="physical" class="col-sm-2 col-attr">
             <h3>PHYSICAL</h3>
             <div id="chart5"></div>
             <h4>Jumping</h4>
@@ -125,15 +125,16 @@
 <script>
     var data = [];
 
-    var sum = 0;
-    $('#pace p').each(function (index, item) {
-        sum = sum + Number($(item).text());
+    $('#attr').children('div.col-attr').each(function (i, divEl) {
+        var sum = 0;
+        $(divEl).children('p').each(function (j, pEl) {
+            sum = sum + Number($(pEl).text());
+        });
+        var result = Math.round(sum / $(divEl).children('p').length);
+        data.push(result);
     });
-    var result = Math.round(sum / $('#pace p').length);
-    data.push(result);
 
     data.forEach(function (d, i) {
-        console.log(data);
         id = "chart" + i;
         var chart = c3.generate({
             bindto: '#chart' + i,
@@ -157,7 +158,7 @@
             color: {
                 pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'],
                 threshold: {
-                    values: [20, 40, 60, 80]
+                    values: [25, 50, 75, 100]
                 }
             }
         });
