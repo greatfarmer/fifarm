@@ -193,6 +193,17 @@
             top: 50%;
             background: #ffffff;
         }
+
+        /*ajax loading*/
+        .wrap-loading div {
+            position: fixed;
+            top:50%;
+            left:50%;
+            transform: translateX(-50%);
+        }
+        .display-none{
+            display:none;
+        }
     </style>
 </head>
 <body id="top" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -226,6 +237,12 @@
 <div id="player" class="container-fluid text-center">
 </div>
 
+<!-- ajax loading -->
+<div class="wrap-loading display-none">
+    <div><img th:src="@{/images/loading.gif}" /></div>
+</div>
+
+<!-- footer -->
 <footer class="container-fluid text-center">
     <a href="#top" title="To Top">
         <span class="glyphicon glyphicon-chevron-up"></span>
@@ -239,6 +256,12 @@
             url : "/player?name=" + $('#playerName').val(),
             type : "get",
             dataType : "text",
+            beforeSend: function() {
+                $('.wrap-loading').removeClass('display-none');
+            },
+            complete: function() {
+                $('.wrap-loading').addClass('display-none');
+            },
             success : function(data) {
                 $('#player').html(data);
             },
@@ -253,6 +276,7 @@
             if (event.keyCode == 13) {
                 event.preventDefault();
                 $('#searchBtn').click();
+                $('#playerName').val('');
             }
         });
     });
