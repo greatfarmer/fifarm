@@ -35,3 +35,7 @@ build/
 
 ### application.yml for production ###
 src/main/resources/real-application.yml
+
+### logs ###
+logs/
+.log
