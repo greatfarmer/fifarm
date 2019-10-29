@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: production
+    active: local
   devtools:
     livereload:
       enabled: true
@@ -10,13 +10,16 @@ spring:
 ---
 spring:
   profiles: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: fifarm
   jpa:
     show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-  h2:
-    console:
-      enabled: true
+
+server:
+  port: 8090
 
 ---
 spring.profiles: production
