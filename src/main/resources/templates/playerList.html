@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Player List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .display-none {
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <span>RAT</span>
+    <span>NAME</span>
+    <span>PAC</span>
+    <span>SHO</span>
+    <span>PAS</span>
+    <span>DRI</span>
+    <span>DEF</span>
+    <span>PHY</span>
+</div>
+<ul class="list-group" th:each="player : ${players}">
+    <li class="list-group-item">
+        <span class="player-rating"></span>
+        <span class="player-info">
+            <span th:text="${player.firstName}">firstName</span>
+            <span th:text="${player.lastName}">lastName</span>
+        </span>
+        <span class="player-right">
+            <span id="pace" class="player-stat" th:text="${(player.acceleration + player.sprintspeed) / 2}"></span>
+            <span id="shooting" class="player-stat" th:text="${(player.positioning + player.finishing + player.shotpower + player.longshots + player.volleys + player.penalties) / 6}"></span>
+            <span id="passing" class="player-stat" th:text="${(player.vision + player.crossing + player.freekickaccuracy + player.shortpassing + player.longpassing + player.curve) / 6}"></span>
+            <span id="dribbling" class="player-stat" th:text="${(player.agility + player.balance + player.reactions + player.ballcontrol + player.dribbling + player.composure) / 6}"></span>
+            <span id="defense" class="player-stat" th:text="${(player.interceptions + player.headingaccuracy + player.marking + player.standingtackle + player.slidingtackle) / 5}"></span>
+            <span id="physical" class="player-stat" th:text="${(player.jumping + player.stamina + player.strength + player.aggression) / 4}"></span>
+        </span>
+    </li>
+</ul>
+
+</body>
+</html>

@@ -39,14 +39,14 @@ public class HomeController {
         String url = String.format(FifarmCV.FUT_PLAYER_API_URL, name);
         Result result = httpRequestService.sendGet(url);
         if (result.getResponseCode() == 200 && mongoService.insertToMongo(result.getResponse())) {
-            DBCursor cursorDoc = mongoService.searchByNameUsingTextScore(name, 1);
+            DBCursor cursorDoc = mongoService.searchByNameUsingTextScore(name, 100);
             while (cursorDoc.hasNext()) {
                 players.add(cursorDoc.next());
             }
         }
 
         model.addAttribute("players", players);
-        return "player";
+        return "playerList";
     }
 
     private void getClientIp() {
