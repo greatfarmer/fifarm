@@ -11,19 +11,15 @@
     </style>
 </head>
 <body>
-<div class="content">
-    <span>RAT</span>
-    <span>NAME</span>
-    <span>PAC</span>
-    <span>SHO</span>
-    <span>PAS</span>
-    <span>DRI</span>
-    <span>DEF</span>
-    <span>PHY</span>
-</div>
 <ul class="list-group" th:each="player : ${players}">
     <li class="list-group-item">
-        <span class="player-rating"></span>
+        <input type="hidden" id="playerId" th:value="${player.id}">
+        <span class="player-rating">
+            <span th:text="${player.composure}">firstName</span>
+        </span>
+        <span class="player-image">
+            <img th:attr="src=${player.headshot.imgUrl}" height="50" width="50" />
+        </span>
         <span class="player-info">
             <span th:text="${player.firstName}">firstName</span>
             <span th:text="${player.lastName}">lastName</span>
@@ -38,6 +34,33 @@
         </span>
     </li>
 </ul>
+
+<script>
+    $("li").on("click", function() {
+        var playerId = $(this).children('input#playerId').val();
+        searchById(playerId);
+    });
+
+    function searchById(playerId) {
+        $.ajax({
+            url : "/playerId?id=" + playerId,
+            type : "get",
+            dataType : "text",
+            beforeSend: function() {
+                $('.wrap-loading').removeClass('display-none');
+            },
+            complete: function() {
+                $('.wrap-loading').addClass('display-none');
+            },
+            success : function(data) {
+                $('#player').html(data);
+            },
+            error : function () {
+                $('#player').html("Not found.");
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

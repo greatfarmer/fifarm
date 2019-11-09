@@ -61,4 +61,11 @@ public class MongoService {
         return collection.find(findCommand, projectCommand).sort(sortCommand).limit(limit);
     }
 
+    // db.player.find({"id":"268635560"})
+    public DBCursor searchById(String id, int limit) {
+        DBCollection collection = getCollection("player");
+        DBObject findCommand = new BasicDBObject("id", id);
+        return collection.find(findCommand).limit(limit);
+    }
+
 }

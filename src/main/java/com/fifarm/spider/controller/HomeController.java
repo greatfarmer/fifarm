@@ -49,6 +49,20 @@ public class HomeController {
         return "playerList";
     }
 
+    @RequestMapping("/playerId")
+    public String findById(@RequestParam("id") String id, Model model) {
+        DBCursor cursorDoc = mongoService.searchById(id, 1);
+
+        List<DBObject> players = new ArrayList<>();
+        // TODO id로 검색결과가 없을 경우 처리
+        while (cursorDoc.hasNext()) {
+            players.add(cursorDoc.next());
+        }
+
+        model.addAttribute("players", players);
+        return "player";
+    }
+
     private void getClientIp() {
         HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String ip = req.getHeader("X-FORWARDED-FOR");
