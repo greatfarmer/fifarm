@@ -4,18 +4,13 @@
     <title>Player List</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .display-none {
-            display:none;
-        }
-    </style>
 </head>
 <body>
 <ul class="list-group" th:each="player : ${players}">
     <li class="list-group-item">
         <input type="hidden" id="playerId" th:value="${player.id}">
         <span class="player-rating">
-            <span th:text="${player.composure}">firstName</span>
+            <span th:text="${player.composure}">rating</span>
         </span>
         <span class="player-image">
             <img th:attr="src=${player.headshot.imgUrl}" height="50" width="50" />
@@ -24,7 +19,7 @@
             <span th:text="${player.firstName}">firstName</span>
             <span th:text="${player.lastName}">lastName</span>
         </span>
-        <span class="player-right">
+        <span class="player-right display-none">
             <span id="pace" class="player-stat" th:text="${(player.acceleration + player.sprintspeed) / 2}"></span>
             <span id="shooting" class="player-stat" th:text="${(player.positioning + player.finishing + player.shotpower + player.longshots + player.volleys + player.penalties) / 6}"></span>
             <span id="passing" class="player-stat" th:text="${(player.vision + player.crossing + player.freekickaccuracy + player.shortpassing + player.longpassing + player.curve) / 6}"></span>
