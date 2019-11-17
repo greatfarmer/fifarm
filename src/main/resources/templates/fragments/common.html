@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="commonFragment">
+    <nav class="navbar navbar-default navbar-fixed-top">
+    </nav>
+
+    <div class="jumbotron text-center">
+        <h1>FIFArm</h1>
+        <p>EA SPORTS FUT DATABASE</p>
+        <form>
+            <div class="input-group">
+                <input id="playerName" type="text" class="form-control" size="50" placeholder="Search for players" required>
+                <div class="input-group-btn">
+                    <button id="searchBtn" type="button" class="btn btn-danger" onclick="searchPlayer()">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ajax loading -->
+    <div class="wrap-loading display-none">
+        <div><img th:src="@{/images/ajax-loader.gif}" /></div>
+    </div>
+</div>
+
+</html>

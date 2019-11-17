@@ -1,61 +1,69 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Player List</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<ul class="list-group" th:each="player : ${players}">
-    <li class="list-group-item">
-        <input type="hidden" id="playerId" th:value="${player.id}">
-        <span class="player-rating">
-            <span th:text="${player.composure}">rating</span>
-        </span>
-        <span class="player-image">
-            <img th:attr="src=${player.headshot.imgUrl}" height="50" width="50" />
-        </span>
-        <span class="player-info">
-            <span th:text="${player.firstName}">firstName</span>
-            <span th:text="${player.lastName}">lastName</span>
-        </span>
-        <span class="player-right display-none">
-            <span id="pace" class="player-stat" th:text="${(player.acceleration + player.sprintspeed) / 2}"></span>
-            <span id="shooting" class="player-stat" th:text="${(player.positioning + player.finishing + player.shotpower + player.longshots + player.volleys + player.penalties) / 6}"></span>
-            <span id="passing" class="player-stat" th:text="${(player.vision + player.crossing + player.freekickaccuracy + player.shortpassing + player.longpassing + player.curve) / 6}"></span>
-            <span id="dribbling" class="player-stat" th:text="${(player.agility + player.balance + player.reactions + player.ballcontrol + player.dribbling + player.composure) / 6}"></span>
-            <span id="defense" class="player-stat" th:text="${(player.interceptions + player.headingaccuracy + player.marking + player.standingtackle + player.slidingtackle) / 5}"></span>
-            <span id="physical" class="player-stat" th:text="${(player.jumping + player.stamina + player.strength + player.aggression) / 4}"></span>
-        </span>
-    </li>
-</ul>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<div layout:fragment="content">
+    <input type="hidden" id="player-name" th:value="${playerName}" />
+
+    <div id="player-list-content"></div>
+</div>
+
+<th:block layout:fragment="script">
+<script id="player-list-template" type="text/x-handlebars-template">
+    <ul class="list-group">
+    {{#each .}}
+        <li class="list-group-item" onclick="selectPlayer({{id}})">
+            <input type="hidden" id="playerId" value="{{id}}">
+            <span class="player-rating">
+                <span>{{composure}}</span>
+            </span>
+                <span class="player-image">
+                <img src="{{headshot.imgUrl}}" height="50" width="50" />
+            </span>
+                <span class="player-info">
+                <span>{{firstName}}</span>
+                <span>{{lastName}}</span>
+            </span>
+        </li>
+    {{/each}}
+    </ul>
+</script>
 
 <script>
-    $("li").on("click", function() {
-        var playerId = $(this).children('input#playerId').val();
-        searchById(playerId);
+    $(document).ready(function() {
+        var playerName = $('#player-name').val();
+        getJsonByPlayerName(playerName);
     });
 
-    function searchById(playerId) {
+    function getJsonByPlayerName(playerName) {
         $.ajax({
-            url : "/playerId?id=" + playerId,
+            url : "/json/search/" + playerName,
             type : "get",
-            dataType : "text",
+            dataType : "json",
             beforeSend: function() {
                 $('.wrap-loading').removeClass('display-none');
             },
             complete: function() {
                 $('.wrap-loading').addClass('display-none');
             },
-            success : function(data) {
-                $('#player').html(data);
+            success : function(playerList) {
+                console.log(playerList);
+                var source = $('#player-list-template').html();
+                var template = Handlebars.compile(source);
+                var html = template(playerList);
+                $('#player-list-content').append(html);
             },
             error : function () {
-                $('#player').html("Not found.");
+                $('#player-list-content').html("Not found.");
             }
         });
     }
-</script>
 
-</body>
+    function selectPlayer(playerId) {
+        var url = "/player/" + playerId;
+        $(location).attr('href', url);
+    }
+</script>
+</th:block>
 </html>

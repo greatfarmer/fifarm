@@ -62,7 +62,17 @@
             <artifactId>c3</artifactId>
             <version>0.6.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>handlebars</artifactId>
+            <version>4.4.0</version>
+        </dependency>
 
+        <!-- thymeleaf layout -->
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
 
         <!-- databases -->
         <dependency>

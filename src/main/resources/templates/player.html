@@ -1,35 +1,45 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Player</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 
-<div class="row" th:each="player : ${players}">
+<div layout:fragment="content">
+    <input type="hidden" id="player-id" th:value="${playerId}" />
+
+    <div class="row" id="player-content"></div>
+</div>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/webjars/c3/0.6.3/c3.min.css">
+</th:block>
+
+<th:block layout:fragment="script">
+<script src="/webjars/c3/0.6.3/docs/js/d3-5.4.0.min.js"></script>
+<script src="/webjars/c3/0.6.3/c3.min.js"></script>
+
+<script id="player-template" type="text/x-handlebars-template">
     <div class="col-sm-3">
         <h3>PLAYER</h3>
         <p>
-            <span th:text="${player.firstName}">firstName</span>
-            <span th:text="${player.lastName}">lastName</span>
+            <span>{{firstName}}</span>
+            <span>{{lastName}}</span>
         </p>
-        <img th:attr="src=${player.headshot.imgUrl}" />
+        <img src="{{headshot.imgUrl}}" />
     </div>
     <div class="col-sm-3">
         <h3>NATION</h3>
-        <p th:text="${player.nation.name}">nation</p>
-        <img th:attr="src=${player.nation.imageUrls.medium}" />
+        <p>{{nation.name}}</p>
+        <img src="{{nation.imageUrls.medium}}" />
     </div>
     <div class="col-sm-3">
         <h3>LEAGUE</h3>
-        <p th:text="${player.league.name}">league</p>
-        <img th:attr="src=${player.league.imageUrls.light}" />
+        <p>{{league.name}}</p>
+        <img src="{{league.imageUrls.light}}" />
     </div>
     <div class="col-sm-3">
         <h3>CLUB</h3>
-        <p th:text="${player.club.name}">club</p>
-        <img th:attr="src=${player.club.imageUrls.light.medium}" />
+        <p>{{club.name}}</p>
+        <img src="{{club.imageUrls.light.medium}}" />
     </div>
 
     <div class="col-sm-12">&nbsp;</div>
@@ -39,132 +49,164 @@
             <h3>PACE</h3>
             <div id="chart0"></div>
             <h4>Acceleration</h4>
-            <p th:text="${player.acceleration}"></p>
+            <p>{{acceleration}}</p>
             <h4>Sprint Speed</h4>
-            <p th:text="${player.sprintspeed}"></p>
+            <p>{{sprintspeed}}</p>
         </div>
         <div id="shooting" class="col-sm-2 col-attr">
             <h3>SHOOTING</h3>
             <div id="chart1"></div>
             <h4>Positioning</h4>
-            <p th:text="${player.positioning}"></p>
+            <p>{{positioning}}</p>
             <h4>Finishing</h4>
-            <p th:text="${player.finishing}"></p>
+            <p>{{finishing}}</p>
             <h4>Shot Power</h4>
-            <p th:text="${player.shotpower}"></p>
+            <p>{{shotpower}}</p>
             <h4>Long Shots</h4>
-            <p th:text="${player.longshots}"></p>
+            <p>{{longshots}}</p>
             <h4>Volleys</h4>
-            <p th:text="${player.volleys}"></p>
+            <p>{{volleys}}</p>
             <h4>Penalties</h4>
-            <p th:text="${player.penalties}"></p>
+            <p>{{penalties}}</p>
         </div>
         <div id="passing" class="col-sm-2 col-attr">
             <h3>PASSING</h3>
             <div id="chart2"></div>
             <h4>Vision</h4>
-            <p th:text="${player.vision}"></p>
+            <p>{{vision}}</p>
             <h4>Crossing</h4>
-            <p th:text="${player.crossing}"></p>
+            <p>{{crossing}}</p>
             <h4>Free Kick</h4>
-            <p th:text="${player.freekickaccuracy}"></p>
+            <p>{{freekickaccuracy}}</p>
             <h4>Short Passing</h4>
-            <p th:text="${player.shortpassing}"></p>
+            <p>{{shortpassing}}</p>
             <h4>Long Passing</h4>
-            <p th:text="${player.longpassing}"></p>
+            <p>{{longpassing}}</p>
             <h4>Curve</h4>
-            <p th:text="${player.curve}"></p>
+            <p>{{curve}}</p>
         </div>
         <div id="dribbling" class="col-sm-2 col-attr">
             <h3>DRIBBLING</h3>
             <div id="chart3"></div>
             <h4>Agility</h4>
-            <p th:text="${player.agility}"></p>
+            <p>{{agility}}</p>
             <h4>Balance</h4>
-            <p th:text="${player.balance}"></p>
+            <p>{{balance}}</p>
             <h4>Reactions</h4>
-            <p th:text="${player.reactions}"></p>
+            <p>{{reactions}}</p>
             <h4>Ball Control</h4>
-            <p th:text="${player.ballcontrol}"></p>
+            <p>{{ballcontrol}}</p>
             <h4>Dribbling</h4>
-            <p th:text="${player.dribbling}"></p>
+            <p>{{dribbling}}</p>
             <h4>Composure</h4>
-            <p th:text="${player.composure}"></p>
+            <p>{{composure}}</p>
         </div>
         <div id="defense" class="col-sm-2 col-attr">
             <h3>DEFENSE</h3>
             <div id="chart4"></div>
             <h4>Interceptions</h4>
-            <p th:text="${player.interceptions}"></p>
+            <p>{{interceptions}}</p>
             <h4>Heading</h4>
-            <p th:text="${player.headingaccuracy}"></p>
+            <p>{{headingaccuracy}}</p>
             <h4>Marking</h4>
-            <p th:text="${player.marking}"></p>
+            <p>{{marking}}</p>
             <h4>Standing Tackle</h4>
-            <p th:text="${player.standingtackle}"></p>
+            <p>{{standingtackle}}</p>
             <h4>Sliding Tackle</h4>
-            <p th:text="${player.slidingtackle}"></p>
+            <p>{{slidingtackle}}</p>
         </div>
         <div id="physical" class="col-sm-2 col-attr">
             <h3>PHYSICAL</h3>
             <div id="chart5"></div>
             <h4>Jumping</h4>
-            <p th:text="${player.jumping}"></p>
+            <p>{{jumping}}</p>
             <h4>Stamina</h4>
-            <p th:text="${player.stamina}"></p>
+            <p>{{stamina}}</p>
             <h4>Strength</h4>
-            <p th:text="${player.strength}"></p>
+            <p>{{strength}}</p>
             <h4>Aggression</h4>
-            <p th:text="${player.aggression}"></p>
+            <p>{{aggression}}</p>
         </div>
     </div>
-</div>
-
-<script>
-    var data = [];
-
-    $('#attr').children('div.col-attr').each(function (i, divEl) {
-        var sum = 0;
-        $(divEl).children('p').each(function (j, pEl) {
-            sum = sum + Number($(pEl).text());
-        });
-        var result = Math.round(sum / $(divEl).children('p').length);
-        data.push(result);
-    });
-
-    data.forEach(function (d, i) {
-        id = "chart" + i;
-        var chart = c3.generate({
-            bindto: '#chart' + i,
-            data: {
-                columns: [
-                    ['data', d]
-                ],
-                type: 'gauge'
-            },
-            legend: {
-                show: false
-            },
-            gauge: {
-                label: {
-                    format: function(value, ratio) {
-                        return value;
-                    },
-                    show: false
-                }
-            },
-            color: {
-                pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'],
-                threshold: {
-                    values: [25, 50, 75, 100]
-                }
-            },
-            size: {
-                height: 100
-            }
-        });
-    });
 </script>
 
-</body>
+<script>
+    $(document).ready(function() {
+        var playerId = $('#player-id').val();
+        getJsonByPlayerId(playerId);
+    });
+
+    function getJsonByPlayerId(playerId) {
+        $.ajax({
+            url : "/json/player/" + playerId,
+            type : "get",
+            dataType : "json",
+            beforeSend: function() {
+                $('.wrap-loading').removeClass('display-none');
+            },
+            complete: function() {
+                $('.wrap-loading').addClass('display-none');
+            },
+            success : function(player) {
+                console.log(player);
+                var source = $('#player-template').html();
+                var template = Handlebars.compile(source);
+                var html = template(player);
+                $('#player-content').append(html);
+                showChart();
+            },
+            error : function () {
+                $('#player-content').html("Not found.");
+            }
+        });
+    }
+
+    function showChart() {
+        var data = [];
+
+        $('#attr').children('div.col-attr').each(function (i, divEl) {
+            var sum = 0;
+            $(divEl).children('p').each(function (j, pEl) {
+                sum = sum + Number($(pEl).text());
+            });
+            var result = Math.round(sum / $(divEl).children('p').length);
+            data.push(result);
+        });
+
+        data.forEach(function (d, i) {
+            id = "chart" + i;
+            var chart = c3.generate({
+                bindto: '#chart' + i,
+                data: {
+                    columns: [
+                        ['data', d]
+                    ],
+                    type: 'gauge'
+                },
+                legend: {
+                    show: false
+                },
+                gauge: {
+                    label: {
+                        format: function (value, ratio) {
+                            return value;
+                        },
+                        show: false
+                    }
+                },
+                color: {
+                    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'],
+                    threshold: {
+                        values: [25, 50, 75, 100]
+                    }
+                },
+                size: {
+                    height: 100
+                }
+            });
+        });
+    }
+</script>
+</th:block>
+
 </html>

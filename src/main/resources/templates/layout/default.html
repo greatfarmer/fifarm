@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- config -->
+<head th:replace="fragments/config :: configFragment"></head>
+
+<!-- header -->
+<header th:replace="fragments/header :: headerFragment"></header>
+
+<body id="top" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<!-- common -->
+<div th:replace="fragments/common :: commonFragment"></div>
+
+<!-- content -->
+<div class="container-fluid text-center" layout:fragment="content"></div>
+
+<!-- footer -->
+<footer th:replace="fragments/footer :: footerFragment"></footer>
+
+<script>
+    function searchPlayer() {
+        var playerName = $('#playerName').val();
+        var url = "/search/" + playerName;
+        $(location).attr('href', url);
+    }
+
+    $(document).ready(function() {
+        $('#playerName').keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $('#searchBtn').click();
+                $('#playerName').val('');
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
