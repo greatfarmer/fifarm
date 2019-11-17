@@ -48,7 +48,6 @@
                 $('.wrap-loading').addClass('display-none');
             },
             success : function(playerList) {
-                console.log(playerList);
                 var source = $('#player-list-template').html();
                 var template = Handlebars.compile(source);
                 var html = template(playerList);

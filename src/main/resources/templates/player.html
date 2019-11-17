@@ -148,7 +148,6 @@
                 $('.wrap-loading').addClass('display-none');
             },
             success : function(player) {
-                console.log(player);
                 var source = $('#player-template').html();
                 var template = Handlebars.compile(source);
                 var html = template(player);
