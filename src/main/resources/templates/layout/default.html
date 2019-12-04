@@ -21,8 +21,12 @@
 <script>
     function searchPlayer() {
         var playerName = $('#playerName').val();
-        var url = "/search/" + playerName;
-        $(location).attr('href', url);
+        if(playerName.replace(/\s/g, "").length == 0) {
+            $('#player-name').focus();
+        } else {
+            var url = "/search/" + playerName;
+            $(location).attr('href', url);
+        }
     }
 
     $(document).ready(function() {
