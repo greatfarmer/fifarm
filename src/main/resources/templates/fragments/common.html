@@ -2,20 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="commonFragment">
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-warning navbar-fixed-top">
     </nav>
 
     <div class="jumbotron text-center">
         <h1>FIFArm</h1>
         <p>EA SPORTS FUT DATABASE</p>
-        <form>
-            <div class="input-group">
-                <input id="playerName" type="text" class="form-control" size="50" placeholder="Search for players" required>
-                <div class="input-group-btn">
-                    <button id="searchBtn" type="button" class="btn btn-danger" onclick="searchPlayer()">Search</button>
-                </div>
-            </div>
-        </form>
+        <div class="form-group has-error">
+            <input id="playerName" type="text" class="form-control" placeholder="Search for players" required>
+        </div>
     </div>
 
     <!-- ajax loading -->

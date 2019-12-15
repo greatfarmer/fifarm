@@ -11,23 +11,27 @@
 
 <th:block layout:fragment="script">
 <script id="player-list-template" type="text/x-handlebars-template">
-    <ul class="list-group">
-    {{#each .}}
-        <li class="list-group-item" onclick="selectPlayer({{id}})">
-            <input type="hidden" id="playerId" value="{{id}}">
-            <span class="player-rating">
-                <span>{{composure}}</span>
-            </span>
-                <span class="player-image">
-                <img src="{{headshot.imgUrl}}" height="50" width="50" />
-            </span>
-                <span class="player-info">
-                <span>{{firstName}}</span>
-                <span>{{lastName}}</span>
-            </span>
-        </li>
-    {{/each}}
-    </ul>
+    <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+    <div class="bs-component">
+        <div class="list-group">
+        {{#each .}}
+            <div class="list-group-item" onclick="selectPlayer({{id}})">
+                <input type="hidden" id="playerId" value="{{id}}">
+                <div class="row-picture">
+                    <img class="circle" src="{{headshot.imgUrl}}" alt="headshot">
+                </div>
+                <div class="row-content">
+                    <h4 class="list-group-item-heading">{{firstName}} {{lastName}}</h4>
+                    <p class="list-group-item-text">{{composure}}</p>
+                </div>
+            </div>
+            <div class="list-group-separator"></div>
+        {{/each}}
+        </div>
+    </div>
+    </div>
+    </div>
 </script>
 
 <script>
