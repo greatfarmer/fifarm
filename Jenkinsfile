@@ -19,6 +19,7 @@ pipeline {
         }
         stage('Deliver') {
             steps {
+                pwd
                 sh 'scp -i ${FIFARM_BUILD_KEY} ${FIFARM_JAR_FILE} ${FIFARM_BUILD_HOST}:${FIFARM_DIR}'
                 sh 'ssh -i ${FIFARM_BUILD_KEY} ${FIFARM_BUILD_HOST} "cd ${FIFARM_DIR};./fifarm.sh restart"'
             }
