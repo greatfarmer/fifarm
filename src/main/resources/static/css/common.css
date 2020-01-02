@@ -46,3 +46,39 @@ footer .glyphicon {
     /*display: inline-block;*/
     padding: 10px 5% !important;
 }
+
+/*autocomple*/
+.ui-autocomplete .highlight {
+    color: #ff5722;
+}
+.ui-autocomplete .m-icon {
+    max-width: 20px;
+}
+.ui-autocomplete .m-icon-left {
+    float: left;
+    margin-right: 2px;
+}
+.ui-autocomplete .m-icon-right {
+    float: left;
+    margin-right: 2px;
+}
+.ui-autocomplete .x-icon {
+    float: left;
+    width: 20px;
+    font-size: small;
+    text-align: center;
+}
+.ui-autocomplete .m-name {
+    margin-left: 10px;
+}
+.ui-autocomplete .m-composure {
+    font-weight: bold;
+}
+.ui-autocomplete div::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.ui-menu-item .ui-state-active  {
+    background:  #bae1ff;
+}

@@ -18,7 +18,70 @@
 <!-- footer -->
 <footer th:replace="fragments/footer :: footerFragment"></footer>
 
+<!-- script -->
 <script>
+    $(function() {
+        $('#playerName').autocomplete({
+            source: "/json/autocomplete",
+            minLength: 2,
+            focus: function(event, ui) {
+                event.preventDefault();
+                $(event.target).val(ui.item.firstName + " " + ui.item.lastName);
+            },
+            select: function(event, ui) {
+                event.preventDefault();
+                $(location).attr('href', "/player/" + ui.item.id);
+            }
+        }).data("ui-autocomplete")._renderItem = function (ul, item) {
+            var $div = $("<div></div>");
+
+            // player image
+            if (item.club) {
+                $("<img class='m-icon m-icon-left'>").attr("src", item.headshot.imgUrl).appendTo($div);
+                $("<img class='m-icon m-icon-left'>").attr("src", item.club.imageUrls.light.small).appendTo($div);
+                $("<img class='m-icon m-icon-left'>").attr("src", item.nation.imageUrls.small).appendTo($div);
+            } else {
+                $("<span class='x-icon'>no img</span>").appendTo($div);
+            }
+
+            // player name
+            var mName = $("<span class='m-name'></span>").text(item.firstName + " " + item.lastName).appendTo($div),
+                searchText = $.trim(this.term).toLowerCase(),
+                currentNode = mName.get(0).firstChild, matchIndex, newTextNode, newSpanNode;
+            while ((matchIndex = currentNode.data.toLowerCase().indexOf(searchText)) >= 0) {
+                newTextNode = currentNode.splitText(matchIndex);
+                currentNode = newTextNode.splitText(searchText.length);
+                newSpanNode = document.createElement("span");
+                newSpanNode.className = "highlight";
+                currentNode.parentNode.insertBefore(newSpanNode, currentNode);
+                newSpanNode.appendChild(newTextNode);
+            }
+
+            // player position
+            $("<span></span>").text(" (" + item.position + ")").appendTo($div);
+
+            // player composure
+            var color = "black";
+            switch (item.quality) {
+                case "gold":
+                    color = "gold";
+                    break;
+                case 'silver':
+                    color = "silver";
+                    break;
+                case 'bronze':
+                    color = "#cd7f32";
+                    break;
+                default:
+                    break;
+            }
+            var liStyle = " style='color:" + color +"'";
+            $("<span class='m-name m-composure'" + liStyle +" ></span>").text(item.composure).appendTo($div);
+
+            return $("<li></li>").append($div).appendTo(ul);
+        };
+    });
+
     function searchPlayer() {
         var playerName = $('#playerName').val();
         if(playerName.replace(/\s/g, "").length == 0) {
@@ -41,6 +104,7 @@
         });
     });
 </script>
+
 </body>
 
 </html>

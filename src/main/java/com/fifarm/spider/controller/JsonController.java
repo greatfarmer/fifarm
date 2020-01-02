@@ -50,5 +50,17 @@ public class JsonController {
         return player;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/autocomplete")
+    public @ResponseBody List<DBObject> getPlayerNames(@RequestParam("term") String term) {
+        DBCursor cursorDoc = mongoService.searchPlayerNames(term, 30);
+
+        List<DBObject> playerNames = new ArrayList<>();
+        while (cursorDoc.hasNext()) {
+            playerNames.add(cursorDoc.next());
+        }
+
+        return playerNames;
+    }
+
 }
 

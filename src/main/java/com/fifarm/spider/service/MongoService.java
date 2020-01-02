@@ -47,12 +47,12 @@ public class MongoService {
     // db.player.find({firstName: {$regex: "harry", $options: "i"}})
     public DBCursor searchByNameUsingFullMatch(String name) {
         DBCollection collection = getCollection("player");
-        BasicDBObject regexQuery = new BasicDBObject();
+        DBObject regexQuery = new BasicDBObject();
         regexQuery.put("firstName", new BasicDBObject("$regex", name).append("$options", "i"));
         return collection.find(regexQuery);
     }
 
-    // db.player.find({$text: {$search: "Heung Min"}},{score:{$meta: "textScore"}}).sort({score:{$meta:"textScore"}})
+    // db.player.find({$text: {$search: "Heung Min"}},{score:{$meta: "textScore"}}).sort({score:{$meta:"textScore"}}).limit(100)
     public DBCursor searchByNameUsingTextScore(String name, int limit) {
         DBCollection collection = getCollection("player");
         DBObject findCommand = new BasicDBObject("$text", new BasicDBObject("$search", name));
@@ -66,6 +66,25 @@ public class MongoService {
         DBCollection collection = getCollection("player");
         DBObject findCommand = new BasicDBObject("id", id);
         return collection.find(findCommand).limit(limit);
+    }
+
+    // db.player.find({$text: {$search: "Min"}},{"_id": false, "firstName": true, "lastName": true, "club": true, "nation": true, "headshot": true, "position": true, "composure": true, "quality": true, "id": true}).sort({"composure": -1}).limit(30)
+    public DBCursor searchPlayerNames(String term, int limit) {
+        DBCollection collection = getCollection("player");
+        DBObject findCommand = new BasicDBObject("$text", new BasicDBObject("$search", term));
+        DBObject projectCommand =  new BasicDBObject();
+        projectCommand.put("_id", false);
+        projectCommand.put("firstName", true);
+        projectCommand.put("lastName", true);
+        projectCommand.put("club", true);
+        projectCommand.put("nation", true);
+        projectCommand.put("headshot", true);
+        projectCommand.put("position", true);
+        projectCommand.put("composure", true);
+        projectCommand.put("quality", true);
+        projectCommand.put("id", true);
+        DBObject sortCommand = new BasicDBObject(new BasicDBObject("composure", -1));
+        return collection.find(findCommand, projectCommand).sort(sortCommand).limit(limit);
     }
 
 }
