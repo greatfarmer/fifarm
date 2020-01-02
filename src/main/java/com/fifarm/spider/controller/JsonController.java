@@ -22,7 +22,7 @@ public class JsonController {
     @Autowired
     MongoService mongoService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/search/{name}")
+    @GetMapping("/search/{name}")
     public @ResponseBody List<DBObject> getPlayerListByName(@PathVariable(value="name") String name) throws Exception {
         List<DBObject> players = new ArrayList<>();
         String url = String.format(FifarmCV.FUT_PLAYER_API_URL, name);
@@ -37,7 +37,7 @@ public class JsonController {
         return players;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/player/{id}")
+    @GetMapping("/player/{id}")
     public @ResponseBody DBObject getPlayerById(@PathVariable(value="id") String id) {
         DBCursor cursorDoc = mongoService.searchById(id, 1);
 
@@ -50,7 +50,7 @@ public class JsonController {
         return player;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/autocomplete")
+    @GetMapping("/autocomplete")
     public @ResponseBody List<DBObject> getPlayerNames(@RequestParam("term") String term) {
         DBCursor cursorDoc = mongoService.searchPlayerNames(term, 30);
 
