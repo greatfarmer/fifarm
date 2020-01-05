@@ -22,16 +22,39 @@
         </encoder>
     </appender>
 
+    <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/access.log.%d{yyyyMMdd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- TRACE > DEBUG > INFO > WARN > ERROR -->
     <springProfile name="local">
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="STDOUT" />
         </root>
+        <logger name="com.fifarm.spider.controller.IndexController">
+            <level value="INFO" />
+            <appender-ref ref="ACCESS" />
+        </logger>
+        <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter">
+            <level value="DEBUG" />
+            <appender-ref ref="REST" />
+        </logger>
     </springProfile>
     <springProfile name="production">
         <root level="INFO">
             <appender-ref ref="STDOUT" />
         </root>
+        <logger name="com.fifarm.spider.controller.IndexController">
+            <level value="INFO" />
+            <appender-ref ref="ACCESS" />
+        </logger>
         <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter">
             <level value="DEBUG" />
             <appender-ref ref="REST" />
