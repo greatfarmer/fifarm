@@ -14,7 +14,7 @@
     <appender name="REST" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/rest.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/rest.log.%d{yyyyMMdd}</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/logback/%d{yyyy/MM,aux}/rest.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -25,7 +25,7 @@
     <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/access.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/access.log.%d{yyyyMMdd}</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/logback/%d{yyyy/MM,aux}/access.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
