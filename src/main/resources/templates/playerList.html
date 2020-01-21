@@ -42,7 +42,7 @@
 
     function getJsonByPlayerName(playerName) {
         $.ajax({
-            url : "/json/search/" + playerName,
+            url : "/api/search/" + playerName,
             type : "get",
             dataType : "json",
             beforeSend: function() {

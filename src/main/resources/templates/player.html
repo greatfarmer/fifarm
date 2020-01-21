@@ -138,7 +138,7 @@
 
     function getJsonByPlayerId(playerId) {
         $.ajax({
-            url : "/json/player/" + playerId,
+            url : "/api/player/" + playerId,
             type : "get",
             dataType : "json",
             beforeSend: function() {
