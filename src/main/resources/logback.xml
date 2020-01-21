@@ -38,7 +38,7 @@
         <root level="INFO">
             <appender-ref ref="STDOUT" />
         </root>
-        <logger name="com.fifarm.spider.controller.IndexController">
+        <logger name="net.fifarm.spider.controller.IndexController">
             <level value="INFO" />
             <appender-ref ref="ACCESS" />
         </logger>
@@ -51,7 +51,7 @@
         <root level="INFO">
             <appender-ref ref="STDOUT" />
         </root>
-        <logger name="com.fifarm.spider.controller.IndexController">
+        <logger name="net.fifarm.spider.controller.IndexController">
             <level value="INFO" />
             <appender-ref ref="ACCESS" />
         </logger>
