@@ -7,7 +7,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread][%-5p] [%F]%M\(%L\) : %m%n</pattern>
         </layout>
     </appender>
 
@@ -18,7 +18,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread][%-5p] [%F]%M\(%L\) : %m%n</pattern>
         </encoder>
     </appender>
 
@@ -29,7 +29,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread][%-5p] [%F]%M\(%L\) : %m%n</pattern>
         </encoder>
     </appender>
 
