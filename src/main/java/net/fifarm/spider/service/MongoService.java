@@ -1,42 +1,39 @@
 package net.fifarm.spider.service;
 
-import net.fifarm.spider.util.JsonUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mongodb.*;
+import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
-import org.springframework.beans.factory.annotation.Value;
+import net.fifarm.spider.util.JsonUtils;
+import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MongoService {
 
-    @Value("${spring.data.mongodb.host}")
-    private String host;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
-    @Value("${spring.data.mongodb.port}")
-    private int port;
+    private String playerCollection = "player";
 
-    @Value("${spring.data.mongodb.database}")
-    private String database;
-
-    public boolean insertToMongo(String jsonString) {
+    public boolean insertToMongo(String jsonString  ) {
         try {
-            DBCollection collection = getCollection("player");
             JsonArray items = getItems(jsonString);
-            items.forEach(jObj -> collection.insert((DBObject) JSON.parse(jObj.toString())));
+            items.forEach(jObj -> mongoTemplate.insert((DBObject) JSON.parse(jObj.toString()), playerCollection));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return false;
-    }
-
-    private DBCollection getCollection(String name) {
-        Mongo mongo = new Mongo(host, port);
-        DB db = mongo.getDB(database);
-        return db.getCollection(name);
     }
 
     private JsonArray getItems(String jsonString) {
@@ -44,47 +41,39 @@ public class MongoService {
         return JsonUtils.getJsonArray(jsonObject, "items");
     }
 
-    // db.player.find({firstName: {$regex: "harry", $options: "i"}})
-    public DBCursor searchByNameUsingFullMatch(String name) {
-        DBCollection collection = getCollection("player");
-        DBObject regexQuery = new BasicDBObject();
-        regexQuery.put("firstName", new BasicDBObject("$regex", name).append("$options", "i"));
-        return collection.find(regexQuery);
-    }
-
     // db.player.find({$text: {$search: "Heung Min"}},{score:{$meta: "textScore"}}).sort({score:{$meta:"textScore"}}).limit(100)
-    public DBCursor searchByNameUsingTextScore(String name, int limit) {
-        DBCollection collection = getCollection("player");
-        DBObject findCommand = new BasicDBObject("$text", new BasicDBObject("$search", name));
-        DBObject projectCommand =  new BasicDBObject("score", new BasicDBObject("$meta", "textScore"));
-        DBObject sortCommand = new BasicDBObject("score", new BasicDBObject("$meta", "textScore"));
-        return collection.find(findCommand, projectCommand).sort(sortCommand).limit(limit);
+    public List<Document> searchByNameUsingTextScore(String name, int limit) {
+        TextCriteria textCriteria = TextCriteria.forDefaultLanguage().matching(name);
+        Query query = TextQuery.queryText(textCriteria).sortByScore().limit(limit);
+        return mongoTemplate.find(query, Document.class, playerCollection);
     }
 
     // db.player.find({"id":"268635560"})
-    public DBCursor searchById(String id, int limit) {
-        DBCollection collection = getCollection("player");
-        DBObject findCommand = new BasicDBObject("id", id);
-        return collection.find(findCommand).limit(limit);
+    public List<Document> searchById(String id, int limit) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(id));
+        query.limit(limit);
+        return mongoTemplate.find(query, Document.class, playerCollection);
     }
 
     // db.player.find({$text: {$search: "Min"}},{"_id": false, "firstName": true, "lastName": true, "club": true, "nation": true, "headshot": true, "position": true, "composure": true, "quality": true, "id": true}).sort({"composure": -1}).limit(30)
-    public DBCursor searchPlayerNames(String term, int limit) {
-        DBCollection collection = getCollection("player");
-        DBObject findCommand = new BasicDBObject("$text", new BasicDBObject("$search", term));
-        DBObject projectCommand =  new BasicDBObject();
-        projectCommand.put("_id", false);
-        projectCommand.put("firstName", true);
-        projectCommand.put("lastName", true);
-        projectCommand.put("club", true);
-        projectCommand.put("nation", true);
-        projectCommand.put("headshot", true);
-        projectCommand.put("position", true);
-        projectCommand.put("composure", true);
-        projectCommand.put("quality", true);
-        projectCommand.put("id", true);
-        DBObject sortCommand = new BasicDBObject(new BasicDBObject("composure", -1));
-        return collection.find(findCommand, projectCommand).sort(sortCommand).limit(limit);
+    public List<Document> searchPlayerNames(String term, int limit) {
+        TextCriteria textCriteria = TextCriteria.forDefaultLanguage().matching(term);
+        Query query = TextQuery.queryText(textCriteria);
+        query.fields()
+                .exclude("_id")
+                .include("firstName")
+                .include("lastName")
+                .include("club")
+                .include("nation")
+                .include("headshot")
+                .include("position")
+                .include("composure")
+                .include("quality")
+                .include("id");
+        query.with(new Sort(Sort.Direction.DESC, "composure"));
+        query.limit(limit);
+        return mongoTemplate.find(query, Document.class, playerCollection);
     }
 
 }
