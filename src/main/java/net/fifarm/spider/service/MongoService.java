@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import net.fifarm.spider.util.DateUtils;
 import net.fifarm.spider.util.JsonUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,22 @@ public class MongoService {
 
     private String playerCollection = "player";
 
-    public boolean insertToMongo(String jsonString  ) {
-        try {
-            JsonArray items = getItems(jsonString);
-            items.forEach(jObj -> mongoTemplate.insert((DBObject) JSON.parse(jObj.toString()), playerCollection));
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+    public void insertToMongo(String jsonString) {
+        JsonArray items = getItems(jsonString);
+        items.forEach(jObj -> {
+            String id = jObj.getAsJsonObject().get("id").getAsString();
+
+            Query query = new Query();
+            query.addCriteria(Criteria.where("id").is(id));
+            boolean existsId = mongoTemplate.exists(query, playerCollection);
+
+            if (!existsId) {
+                String now = DateUtils.getNow();
+                jObj.getAsJsonObject().addProperty("createdDate", now);
+                jObj.getAsJsonObject().addProperty("updatedDate", now);
+                mongoTemplate.insert((DBObject) JSON.parse(jObj.toString()), playerCollection);
+            }
+        });
     }
 
     private JsonArray getItems(String jsonString) {
