@@ -1,5 +1,6 @@
 package net.fifarm.spider.net;
 
+import net.fifarm.spider.cv.FifarmCV;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -10,8 +11,6 @@ import java.net.URL;
 @Component
 public class HttpRequestService {
 
-    public final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36";
-
     public Result sendGet(String targetUrl) throws Exception {
         Result result = new Result();
 
@@ -19,7 +18,7 @@ public class HttpRequestService {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
         con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setRequestProperty("User-Agent", FifarmCV.USER_AGENT);
 
         int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
