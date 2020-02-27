@@ -1,0 +1,16 @@
+/* player page */
+.circle {
+    border-radius: 100%;
+}
+.player-club-img {
+    width: 20px;
+    height: 20px;
+}
+.player-league-img {
+    width: 20px;
+    height: 20px;
+}
+.player-nationality-img {
+    width: 20px;
+    height: 12px;
+}
