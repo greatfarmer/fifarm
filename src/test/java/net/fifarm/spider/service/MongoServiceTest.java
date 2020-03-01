@@ -47,10 +47,4 @@ public class MongoServiceTest {
         assertThat(players.get(0).get("firstName")).isEqualTo("Seonghun");
     }
 
-    @Test
-    public void searchClubNames() {
-        List<String> clubNames = mongoService.searchClubNames();
-        assertThat(clubNames).isNotEmpty();
-    }
-
 }
