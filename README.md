@@ -36,7 +36,7 @@ All FIFA assets are property of EA Sports.
 
 ## Structure
 ```
-fifarm
+.
 ├── src
 │   └── main
 │       └── java
@@ -53,25 +53,13 @@ fifarm
 │       └── resources
 │           └── static
 │           │   ├── css
-│           │   │   └── common.css
 │           │   ├── error
-│           │   │   ├── 5xx.html
-│           │   │   └── 404.html
-│           │   ├── images
-│           │   │   └── ajax-loader.gif
-│           │   ├── js
-│           │   ├── favicon.ico
+│           │   └── images
 │           ├── templates
 │           │   ├── fragments
-│           │   │   ├── common.html
-│           │   │   ├── config.html
-│           │   │   ├── footer.html
-│           │   │   ├── header.html
-│           │   ├── layout
-│           │   │   └── default.html
-│           │   ├── index.html
-│           │   ├── player.html
-│           │   └── playerList.html
+│           │   └── layout
+│           ├── test
+│           │   └── json
 │           ├── application.yml
 │           ├── banner.txt
 │           └── logback.xml
@@ -79,10 +67,11 @@ fifarm
 │   └── test
 │       └── java
 │           ├── net.fifarm.spider
+│           ├── net.fifarm.spider.controller
 │           ├── net.fifarm.spider.db
 │           ├── net.fifarm.spider.json
 │           ├── net.fifarm.spider.log
-│           ├── net.fifarm.spider.simple
+│           ├── net.fifarm.spider.service
 │           └── net.fifarm.spider.util
 ├── .gitignore
 ├── mvnw
@@ -91,7 +80,7 @@ fifarm
 └── README.md
 ```
 
-## packages
+## Packages
 - `config` — to config application.
 - `controller` — to listen to the client.
 - `cv` — to use static String values.
