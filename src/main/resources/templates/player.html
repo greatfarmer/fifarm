@@ -174,7 +174,7 @@
 
 <script>
     $(document).ready(function() {
-        var playerId = $('#player-id').val();
+        let playerId = $('#player-id').val();
         getJsonByPlayerId(playerId);
     });
 
@@ -190,9 +190,9 @@
                 $('.wrap-loading').addClass('display-none');
             },
             success : function(player) {
-                var source = $('#player-template').html();
-                var template = Handlebars.compile(source);
-                var html = template(player);
+                let source = $('#player-template').html();
+                let template = Handlebars.compile(source);
+                let html = template(player);
                 $('#player-content').append(html);
 
                 showPlayerQuality();
@@ -207,8 +207,8 @@
     }
 
     function showPlayerQuality() {
-        var quality = $('#player-quality').val();
-        var headShotColor = "#d8cdba";
+        let quality = $('#player-quality').val();
+        let headShotColor = "#d8cdba";
         switch (quality) {
             case 'gold':
                 headShotColor = "#f5e78e";
@@ -226,20 +226,20 @@
     }
 
     function showChart() {
-        var data = [];
+        let data = [];
 
         $('#attr').children('.col-attr').each(function (i, divEl) {
-            var sum = 0;
+            let sum = 0;
             $(divEl).children('.player-attr').each(function (j, pEl) {
                 sum = sum + Number($(pEl).text());
             });
-            var result = Math.round(sum / $(divEl).children('.player-attr').length);
+            let result = Math.round(sum / $(divEl).children('.player-attr').length);
             data.push(result);
         });
 
         data.forEach(function (d, i) {
             id = "chart" + i;
-            var chart = c3.generate({
+            let chart = c3.generate({
                 bindto: '#chart' + i,
                 data: {
                     columns: [
@@ -278,7 +278,7 @@
     }
 
     function calcAttrColor(value, obj) {
-        var attrColor = "#bd2f2f";
+        let attrColor = "#bd2f2f";
         if (value >= 90) {
             attrColor = "#4e8142";
         } else if (value >= 80) {
@@ -294,13 +294,13 @@
     }
 
     function showStar() {
-        var playerSkillMoves = $('#player-skillMoves').val();
-        for (var i = 0; i < playerSkillMoves; i++) {
+        let playerSkillMoves = $('#player-skillMoves').val();
+        for (let i = 0; i < playerSkillMoves; i++) {
             $('#star-skillMoves').append("★");
         }
 
-        var playerWeakFoot = $('#player-weakFoot').val();
-        for (var i = 0; i < playerWeakFoot; i++) {
+        let playerWeakFoot = $('#player-weakFoot').val();
+        for (let i = 0; i < playerWeakFoot; i++) {
             $('#star-weakFoot').append("★");
         }
     }

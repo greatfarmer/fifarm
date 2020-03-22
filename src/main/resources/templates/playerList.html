@@ -36,7 +36,7 @@
 
 <script>
     $(document).ready(function() {
-        var playerName = $('#player-name').val();
+        let playerName = $('#player-name').val();
         getJsonByPlayerName(playerName);
     });
 
@@ -52,9 +52,9 @@
                 $('.wrap-loading').addClass('display-none');
             },
             success : function(playerList) {
-                var source = $('#player-list-template').html();
-                var template = Handlebars.compile(source);
-                var html = template(playerList);
+                let source = $('#player-list-template').html();
+                let template = Handlebars.compile(source);
+                let html = template(playerList);
                 $('#player-list-content').append(html);
             },
             error : function () {
