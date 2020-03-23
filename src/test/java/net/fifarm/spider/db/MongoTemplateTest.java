@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,17 +20,19 @@ public class MongoTemplateTest {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    String collectionName = "test";
+    Query query = new Query(Criteria.where("type").is("sample"));
+
     @Before
     public void addPlayer() {
-        mongoTemplate.insert("{\"name\" : \"sample\"}", "test");
+        Update update = new Update().set("type", "sample");
+        mongoTemplate.upsert(query, update, collectionName);
     }
 
     @Test
     public void existTest() {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is("sample"));
-        boolean existsId = mongoTemplate.exists(query, "test");
-        assertThat(existsId).isTrue();
+        assertThat(mongoTemplate.exists(query, collectionName)).isTrue();
+        mongoTemplate.remove(query, collectionName);
     }
 
 }
