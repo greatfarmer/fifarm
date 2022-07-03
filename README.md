@@ -99,4 +99,4 @@ All FIFA assets are property of EA Sports.
 - `pom.xml` - contains all the project dependencies.
 
 ## License
-[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+[MIT](https://opensource.org/licenses/MIT)
